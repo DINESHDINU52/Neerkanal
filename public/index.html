@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nerkanal · Autonomous HRMS & ATS Platform</title>
+  <meta name="description" content="Next-generation HRMS, Recruiter ATS, and Candidate Experience Platform powered by Autonomous AI.">
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top App Navigation Header -->
+  <header class="app-header">
+    <div class="brand" onclick="navigateTo('dashboard')">
+      <img src="/logo.png" alt="Nerkanal Logo" id="brand-logo" onerror="this.style.display='none'">
+      <div class="brand-text">
+        <h1>Nerkanal <span class="brand-badge">Enterprise AI</span></h1>
+        <div class="brand-subtitle">Autonomous Workplace & Talent Cloud</div>
+      </div>
+    </div>
+
+    <!-- Quick Persona Switcher for Instant Demo -->
+    <div class="role-switcher-bar">
+      <label><i class="fa-solid fa-users-viewfinder"></i> Persona:</label>
+      <button class="role-btn active" data-role="superadmin" onclick="switchPersona('superadmin@nerkanal.app', 'Super Admin')">Super Admin</button>
+      <button class="role-btn" data-role="hrmanager" onclick="switchPersona('hrmanager@nerkanal.app', 'HR Manager')">HR Manager</button>
+      <button class="role-btn" data-role="recruiter" onclick="switchPersona('recruiter@nerkanal.app', 'Recruiter')">Recruiter</button>
+      <button class="role-btn" data-role="rm" onclick="switchPersona('rm@nerkanal.app', 'Reporting Mgr')">Manager</button>
+      <button class="role-btn" data-role="employee" onclick="switchPersona('employee@nerkanal.app', 'Employee')">Employee</button>
+      <button class="role-btn" data-role="candidate" onclick="switchPersona('candidate@nerkanal.app', 'Candidate')">Candidate</button>
+    </div>
+
+    <!-- Right Header Actions -->
+    <div class="header-actions">
+      <div class="status-pill" id="live-clock-pill">
+        <span class="status-dot"></span>
+        <span id="live-clock">--:--:--</span>
+      </div>
+
+      <a href="/meet/executive-boardroom" target="_blank" class="btn btn-secondary btn-sm" title="Launch Video Meeting">
+        <i class="fa-solid fa-video" style="color:var(--primary);"></i> Meet
+      </a>
+
+      <button class="icon-btn" onclick="openApprovalsModal()" title="Pending Approvals" id="bell-btn">
+        <i class="fa-regular fa-bell"></i>
+        <span class="badge-counter" id="approval-badge">3</span>
+      </button>
+
+      <div class="user-profile-badge" id="user-badge" onclick="showUserProfileModal()">
+        <div class="avatar" id="user-avatar">SA</div>
+        <div class="user-info">
+          <span class="user-name" id="user-name-display">Alex Vance</span>
+          <span class="user-role" id="user-role-display">Super Admin</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container with Sidebar & Content -->
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="app-sidebar">
+      <div class="nav-section-title">Core Operations</div>
+      <a class="nav-item active" data-tab="dashboard" onclick="navigateTo('dashboard')">
+        <span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" data-tab="approvals" onclick="navigateTo('approvals')">
+        <span class="nav-icon"><i class="fa-solid fa-stamp"></i></span>
+        <span>Approvals Hub</span>
+        <span class="nav-badge" id="sidebar-approvals-count">3</span>
+      </a>
+
+      <div class="nav-section-title">Talent Acquisition</div>
+      <a class="nav-item" data-tab="candidate" onclick="navigateTo('candidate')">
+        <span class="nav-icon"><i class="fa-solid fa-user-astronaut"></i></span>
+        <span>Candidate Portal</span>
+      </a>
+      <a class="nav-item" data-tab="ats" onclick="navigateTo('ats')">
+        <span class="nav-icon"><i class="fa-solid fa-address-book"></i></span>
+        <span>Recruiter ATS</span>
+      </a>
+      <a class="nav-item" data-tab="onboarding" onclick="navigateTo('onboarding')">
+        <span class="nav-icon"><i class="fa-solid fa-id-card-clip"></i></span>
+        <span>Onboarding</span>
+      </a>
+
+      <div class="nav-section-title">Employee Experience</div>
+      <a class="nav-item" data-tab="attendance" onclick="navigateTo('attendance')">
+        <span class="nav-icon"><i class="fa-solid fa-fingerprint"></i></span>
+        <span>Attendance & Mood</span>
+      </a>
+      <a class="nav-item" data-tab="leaves" onclick="navigateTo('leaves')">
+        <span class="nav-icon"><i class="fa-solid fa-plane-departure"></i></span>
+        <span>Leave Management</span>
+      </a>
+      <a class="nav-item" data-tab="payroll" onclick="navigateTo('payroll')">
+        <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+        <span>Payroll & Slips</span>
+      </a>
+      <a class="nav-item" data-tab="tracking" onclick="navigateTo('tracking')">
+        <span class="nav-icon"><i class="fa-solid fa-route"></i></span>
+        <span>Field Tracking & Claims</span>
+      </a>
+
+      <div class="nav-section-title">Growth & Culture</div>
+      <a class="nav-item" data-tab="performance" onclick="navigateTo('performance')">
+        <span class="nav-icon"><i class="fa-solid fa-award"></i></span>
+        <span>Performance & OKRs</span>
+      </a>
+      <a class="nav-item" data-tab="engagement" onclick="navigateTo('engagement')">
+        <span class="nav-icon"><i class="fa-solid fa-face-smile-beam"></i></span>
+        <span>Social & Wellness</span>
+      </a>
+      <a class="nav-item" data-tab="training" onclick="navigateTo('training')">
+        <span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+        <span>Training & LMS</span>
+      </a>
+
+      <div class="nav-section-title">Governance & Exits</div>
+      <a class="nav-item" data-tab="complaints" onclick="navigateTo('complaints')">
+        <span class="nav-icon"><i class="fa-solid fa-user-secret"></i></span>
+        <span>Whistleblower</span>
+      </a>
+      <a class="nav-item" data-tab="exit" onclick="navigateTo('exit')">
+        <span class="nav-icon"><i class="fa-solid fa-door-open"></i></span>
+        <span>Exit & FNF</span>
+      </a>
+      <a class="nav-item" data-tab="handbook" onclick="navigateTo('handbook')">
+        <span class="nav-icon"><i class="fa-solid fa-book-bookmark"></i></span>
+        <span>Policies & Sign</span>
+      </a>
+      <a class="nav-item" data-tab="settings" onclick="navigateTo('settings')">
+        <span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+        <span>Settings & Plans</span>
+      </a>
+
+      <div style="margin-top:auto; padding: 12px 6px;">
+        <a href="/docs" target="_blank" class="nav-item" style="border: 1px dashed rgba(245,158,11,0.3); color: var(--primary);">
+          <span class="nav-icon"><i class="fa-solid fa-code"></i></span>
+          <span>Swagger Docs</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area Rendered by JS -->
+    <main class="app-content" id="app-content">
+      <!-- Injected dynamically based on active tab -->
+    </main>
+  </div>
+
+  <!-- Floating Jarvis AI Agent Widget -->
+  <div class="jarvis-widget">
+    <div class="jarvis-toggle-btn" id="jarvis-btn" onclick="toggleJarvis()" title="Ask Jarvis AI">
+      <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <div class="jarvis-chat-panel" id="jarvis-panel">
+      <div class="jarvis-header">
+        <div class="jarvis-header-info">
+          <div class="avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706); color:#060e22; width:30px; height:30px; font-size:12px;">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 13px; color: #fff;">Jarvis HR Copilot</div>
+            <div style="font-size: 10px; color: var(--success);"><i class="fa-solid fa-circle" style="font-size:7px;"></i> Autonomous Engine Active</div>
+          </div>
+        </div>
+        <button class="icon-btn" style="width:28px;height:28px;" onclick="toggleJarvis()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="jarvis-messages" id="jarvis-messages">
+        <div class="jarvis-bubble bot">
+          Greetings! I am Jarvis, your Nerkanal AI copilot. I can query payroll, parse candidate resumes, approve pending requests, or summarize labor compliance. How may I assist you today?
+        </div>
+        <div class="jarvis-suggestions" id="jarvis-quick-prompts">
+          <span class="jarvis-chip" onclick="askJarvisPrompt('Who is on leave today?')">Who is on leave today?</span>
+          <span class="jarvis-chip" onclick="askJarvisPrompt('What is my leave balance?')">My leave balance</span>
+          <span class="jarvis-chip" onclick="askJarvisPrompt('Draft an offer letter for Lead Engineer')">Draft offer letter</span>
+          <span class="jarvis-chip" onclick="askJarvisPrompt('Summarize POSH guidelines')">POSH guidelines</span>
+        </div>
+      </div>
+
+      <div class="jarvis-footer">
+        <input type="text" class="jarvis-input" id="jarvis-input" placeholder="Ask Jarvis anything..." onkeydown="if(event.key==='Enter') sendJarvisMessage()">
+        <button class="btn btn-primary btn-sm" onclick="sendJarvisMessage()" style="padding: 0 12px; border-radius: 20px;">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reusable Modal Host -->
+  <div class="modal-overlay" id="app-modal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-card" id="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-title" style="color: #fff; font-size: 17px;">Modal Dialog</h3>
+        <button class="icon-btn" style="width:30px;height:30px;" onclick="closeModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Content injected dynamically -->
+      </div>
+      <div class="modal-footer" id="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
